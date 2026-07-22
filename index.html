@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reversal Learning — Mouse Tracking</title>
+
+  <!-- jsPsych core + plugins, vendored locally (jsPsych 7.3.4). No CDN /
+       internet dependency — the whole study is self-contained for JATOS. -->
+  <script src="lib/jspsych/jspsych.js"></script>
+  <link  href="lib/jspsych/jspsych.css" rel="stylesheet">
+  <script src="lib/plugin-html-button-response/index.js"></script>
+  <script src="lib/plugin-instructions/index.js"></script>
+
+  <!-- JATOS runtime. This file is served by JATOS when the study runs there;
+       it 404s harmlessly during standalone local preview. -->
+  <script src="jatos.js"></script>
+
+  <!-- Task-specific code. -->
+  <link rel="stylesheet" href="style.css">
+  <script src="plugin-mouse-choice.js"></script>
+  <script src="config.js"></script>
+</head>
+<body>
+  <!-- experiment.js boots itself on DOMContentLoaded / jatos.onLoad. -->
+  <script src="experiment.js"></script>
+</body>
+</html>

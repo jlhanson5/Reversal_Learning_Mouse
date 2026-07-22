@@ -1,0 +1,99 @@
+/* =========================================================================
+ * style.css  —  Layout for the mouse-tracking reversal task.
+ * ========================================================================= */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #f4f4f4;
+  font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #222;
+}
+
+/* jsPsych fills the viewport; give the stage a fixed, comparable geometry. */
+.jspsych-content-wrapper { height: 100vh; }
+.jspsych-content { max-width: none; width: 100%; }
+
+/* ---- The trial stage ------------------------------------------------- */
+.mc-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: default;
+}
+
+/* Choice targets sit in the top corners, mirror-imaged. */
+.mc-target {
+  position: absolute;
+  top: 6vh;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #cfcfcf;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  pointer-events: none;              /* enabled only while a trial is active */
+  user-select: none;
+}
+.mc-left  { left: 6vw; }
+.mc-right { right: 6vw; }
+
+.mc-stage.mc-active .mc-target { pointer-events: auto; cursor: pointer; }
+.mc-stage.mc-active .mc-target:hover { border-color: #7d7d7d; }
+
+.mc-target.mc-chosen { border-color: #444; }
+
+/* The two abstract stimuli. */
+.stim { width: 140px; height: 140px; }
+.stim-circle { border-radius: 50%; }
+.stim-square { border-radius: 8px; }
+
+/* ---- Start button ---------------------------------------------------- */
+.mc-start {
+  position: absolute;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 40px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  background: #333;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.mc-start:hover { background: #111; }
+.mc-hidden { display: none !important; }
+
+/* ---- Feedback -------------------------------------------------------- */
+.mc-feedback {
+  position: absolute;
+  top: 40vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  font-weight: 700;
+  min-height: 1.2em;
+}
+.mc-fb-reward   { color: #1f9d55; }
+.mc-fb-noreward { color: #8a8a8a; }
+.mc-fb-timeout  { color: #c0392b; font-size: 28px; }
+
+/* ---- Misc ------------------------------------------------------------ */
+.mc-blank { width: 100vw; height: 100vh; }
+
+.instructions {
+  max-width: 640px;
+  margin: 8vh auto;
+  line-height: 1.55;
+  font-size: 18px;
+  text-align: left;
+}
+.instructions h1, .instructions h2 { text-align: center; }

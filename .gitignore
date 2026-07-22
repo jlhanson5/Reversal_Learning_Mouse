@@ -1,0 +1,4 @@
+node_modules/
+package-lock.json
+reversal_mousetracking_data.json
+*.log

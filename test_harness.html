@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<script src="lib/jspsych/jspsych.js"></script>
+<link href="lib/jspsych/jspsych.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="plugin-mouse-choice.js"></script>
+</head><body><script>
+window.addEventListener("DOMContentLoaded", function () {
+  const jsPsych = initJsPsych({
+    on_finish: function () { window.__data = jsPsych.data.get().values(); window.__done = true; }
+  });
+  jsPsych.run([{
+    type: jsPsychMouseChoice,
+    left_html:  '<div class="stim stim-circle" style="background:#2f7fd1;"></div>',
+    right_html: '<div class="stim stim-square" style="background:#e08a1e;"></div>',
+    left_id: "A", right_id: "B", correct_id: "A", reward_prob: 0.8,
+    block: 0, start_label: "Start", feedback_duration: 200,
+    time_normalize: true, normalized_points: 101
+  }]);
+});
+</script></body></html>
