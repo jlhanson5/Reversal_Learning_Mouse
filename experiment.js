@@ -56,8 +56,8 @@ function buildTimeline(jsPsych) {
         <h1>How to win points</h1>
         <p>One symbol is usually the <b>better</b> choice — it earns
            <b>+1</b> more often than the other.</p>
-        <p>The better symbol will not win every time, but it wins more often.
-           Try to find it.</p>
+        <p>One symbol wins more often than the other, but not every time.
+           Your job is to figure out which one.</p>
         <p><b>Important:</b> sometimes the two symbols swap. The one that was
            better becomes the worse one. If your symbol stops winning, switch
            to the other symbol.</p>
