@@ -61,7 +61,7 @@ Easiest is the bundled launcher (serves the folder and opens your browser):
 Or do it by hand:
 
 ```bash
-cd rl_mouse
+cd Reversal_Learning_Mouse
 python3 -m http.server 8000
 # open http://localhost:8000
 ```
