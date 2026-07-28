@@ -53,6 +53,20 @@ html, body {
 .stim-circle { border-radius: 50%; }
 .stim-square { border-radius: 8px; }
 
+/* Practice-only shapes (kept visually distinct from the task shapes). */
+.stim-triangle {
+  width: 0; height: 0;
+  border-left: 78px solid transparent;
+  border-right: 78px solid transparent;
+  border-bottom: 135px solid #3aa657;   /* colour set inline per stimulus */
+  background: transparent;
+}
+.stim-diamond {
+  width: 120px; height: 120px;
+  border-radius: 10px;
+  transform: rotate(45deg);
+}
+
 /* ---- Start button ---------------------------------------------------- */
 .mc-start {
   position: absolute;

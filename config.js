@@ -37,6 +37,13 @@ const CONFIG = {
   include_practice: true,
   practice_trials: 6,          // short, deterministic warm-up (reward_prob = 1)
 
+  // Practice uses visually distinct stimuli (different shapes AND colors) so
+  // participants don't carry a learned association into the real task.
+  practice_stimuli: [
+    { id: "P1", label: "green triangle", html: '<div class="stim stim-triangle" style="border-bottom-color:#3aa657;"></div>' },
+    { id: "P2", label: "purple diamond", html: '<div class="stim stim-diamond" style="background:#7d3ac1;"></div>' }
+  ],
+
   /* ---- Timing (ms) ---------------------------------------------------- */
   feedback_duration: 900,      // how long reward/no-reward feedback stays up
   iti: 400,                    // blank inter-trial interval

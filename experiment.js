@@ -46,8 +46,8 @@ function buildTimeline(jsPsych) {
     type: jsPsychInstructions,
     pages: [
       `<div class="instructions">
-        <h1>Welcome</h1>
-        <p>In this task you will repeatedly choose between two symbols.</p>
+        <h1>Hello!</h1>
+        <p>In this task, you will choose between two symbols a number of times.</p>
         <p>On each trial, click the <b>${CONFIG.start_label}</b> button at the
            bottom of the screen, then move your mouse up to the symbol you want
            and click it.</p>
@@ -56,16 +56,15 @@ function buildTimeline(jsPsych) {
         <h1>How to win points</h1>
         <p>One symbol is usually the <b>better</b> choice — it earns
            <b>+1</b> more often than the other.</p>
-        <p>Feedback is a bit noisy, so the better symbol won't win
-           <i>every</i> time. Learn which one pays off more.</p>
-        <p><b>Important:</b> from time to time the symbols may
-           <b>switch</b>, so the one that was better becomes worse. When your
-           choices stop paying off, try switching.</p>
+        <p>The better symbol will not win every time, but it wins more often.
+           Try to find it.</p>
+        <p><b>Important:</b> sometimes the two symbols swap. The one that was
+           better becomes the worse one. If your symbol stops winning, switch
+           to the other symbol.</p>
        </div>`,
       `<div class="instructions">
         <h1>Please note</h1>
-        <p>Move your mouse smoothly and deliberately toward your choice — we
-           record the full path of your cursor.</p>
+        <p>Move your mouse quickly as you make your choice.</p>
         <p>Use a mouse or trackpad on a computer (not a touchscreen).</p>
         <p>Click <b>Next</b> to begin${CONFIG.include_practice ? " with a few practice trials" : ""}.</p>
        </div>`
@@ -85,10 +84,15 @@ function buildTimeline(jsPsych) {
       choices: ["Start practice"]
     });
 
-    const practiceCorrect = Math.random() < 0.5 ? idA : idB;
+    // Practice uses its own visually distinct stimulus set.
+    const practiceStimById = {};
+    CONFIG.practice_stimuli.forEach(s => { practiceStimById[s.id] = s; });
+    const pIdA = CONFIG.practice_stimuli[0].id, pIdB = CONFIG.practice_stimuli[1].id;
+
+    const practiceCorrect = Math.random() < 0.5 ? pIdA : pIdB;
     const pSides = balancedSides(CONFIG.practice_trials);
     for (let i = 0; i < CONFIG.practice_trials; i++) {
-      timeline.push(makeTrial(jsPsych, stimById, {
+      timeline.push(makeTrial(jsPsych, practiceStimById, {
         block: -1,
         is_practice: true,
         correct_id: practiceCorrect,
@@ -101,8 +105,9 @@ function buildTimeline(jsPsych) {
     timeline.push({
       type: jsPsychHtmlButtonResponse,
       stimulus: `<div class="instructions"><h2>Great!</h2>
-        <p>The real task begins now. Feedback will be noisier, and the better
-        symbol may switch during the task.</p>
+        <p>The real task starts now. Remember: one symbol wins more often, and
+        the better symbol can change during the task.</p>
+        <p>The symbols will also look different from the ones in practice.</p>
         <p>There is no more on-screen guidance — just keep trying to earn
         points.</p></div>`,
       choices: ["Begin task"]
@@ -144,7 +149,7 @@ function buildTimeline(jsPsych) {
 /* ---- One reversal-learning trial ------------------------------------ */
 function makeTrial(jsPsych, stimById, opts) {
   const correctStim = stimById[opts.correct_id];
-  const otherStim = CONFIG.stimuli.find(s => s.id !== opts.correct_id);
+  const otherStim = Object.values(stimById).find(s => s.id !== opts.correct_id);
 
   // Place correct stimulus on the chosen side; the other stimulus opposite.
   let left, right;
