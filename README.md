@@ -50,13 +50,25 @@ for JATOS.
 
 ## Quick local preview
 
-Because browsers block some features on `file://`, serve the folder over HTTP:
+Because browsers block some features on `file://`, serve the folder over HTTP.
+Easiest is the bundled launcher (serves the folder and opens your browser):
 
 ```bash
-cd RL_mouse
+./run.sh          # http://localhost:8000
+./run.sh 8080     # or pick a port
+```
+
+Or do it by hand:
+
+```bash
+cd rl_mouse
 python3 -m http.server 8000
 # open http://localhost:8000
 ```
+
+For a quick smoke test without playing all 86 trials, set
+`trials_per_block: 3` and `include_practice: false` in `config.js`, refresh,
+then set them back before deploying.
 
 Outside JATOS the study runs normally and, when finished, downloads a
 `reversal_mousetracking_data.json` file so you can inspect the data. (The
