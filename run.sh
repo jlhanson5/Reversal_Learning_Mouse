@@ -22,13 +22,30 @@ echo "Serving the task at ${URL}  (Ctrl-C to stop)"
   elif command -v xdg-open >/dev/null 2>&1; then xdg-open "$URL"  # Linux
   fi ) >/dev/null 2>&1 &
 
-# Serve with whatever is available.
+# A tiny no-cache static server, so the browser always loads the LATEST files
+# (avoids the classic "I edited the code but the page didn't change" trap).
+NOCACHE_SERVER='
+import sys, http.server, socketserver
+port = int(sys.argv[1])
+class H(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        super().end_headers()
+    def log_message(self, *a): pass
+socketserver.TCPServer.allow_reuse_address = True
+with socketserver.TCPServer(("", port), H) as httpd:
+    print("ready — open " + "http://localhost:%d" % port)
+    httpd.serve_forever()
+'
+
 if command -v python3 >/dev/null 2>&1; then
-  exec python3 -m http.server "$PORT"
+  exec python3 -c "$NOCACHE_SERVER" "$PORT"
 elif command -v python >/dev/null 2>&1; then
-  exec python -m http.server "$PORT"
+  exec python -c "$NOCACHE_SERVER" "$PORT"
 elif command -v npx >/dev/null 2>&1; then
-  exec npx --yes serve -l "$PORT"
+  exec npx --yes serve -l "$PORT" --no-clipboard
 else
   echo "Need python3, python, or npx (Node) to serve the folder." >&2
   exit 1
